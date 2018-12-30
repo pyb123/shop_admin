@@ -5,7 +5,7 @@ import Login from '@/components/Login'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -21,3 +21,24 @@ export default new Router({
     }
   ]
 })
+// 导航守卫
+router.beforeEach((to, from, next) => {
+  // to: 去哪
+  // from： 来自于哪里
+  // next： 下一个
+  // console.log('to', to)
+  // console.log('from', from)
+  // 如果是去登录，直接放行
+  if (to.path === '/login') {
+    next()
+    return
+  }
+  let token = localStorage.getItem('token')
+  if (token) {
+    next()
+  } else {
+    next('/login')
+  }
+})
+
+export default router
