@@ -59,7 +59,10 @@ export default {
             localStorage.setItem('token', res.data.data.token)
 
             // 跳转到首页组件
+            // 单页面跳转
             this.$router.push('/home')
+
+            // 页面发生了跳转
             // location.href = 'http://localhost:8080/#/home'
           } else {
             this.$message.error(res.data.meta.msg)

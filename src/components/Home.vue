@@ -1,13 +1,113 @@
 <template>
-  <div class="home">我是home模块</div>
+  <el-container class="home">
+    <!-- 头部 -->
+    <el-header>
+      <div class="logo"></div>
+      <div class="title">
+        <h1>电商后台管理系统</h1>
+      </div>
+      <div class="logout">
+        <span>欢迎光临</span>
+        <a href="javascript:;" @click="logout">退出</a>
+      </div>
+    </el-header>
+    <el-container>
+      <!-- 左侧边栏 -->
+      <el-aside width="200px">
+        <el-menu
+          default-active="2"
+          class="el-menu-vertical-demo"
+          background-color="#545c64"
+          text-color="#fff"
+          active-text-color="#ffd04b"
+          unique-opened
+          >
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>用户管理</span>
+            </template>
+            <el-menu-item index="1-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">用户列表</span>
+            </el-menu-item>
+          </el-submenu>
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-location"></i>
+              <span>权限管理</span>
+            </template>
+            <el-menu-item index="2-1">
+              <i class="el-icon-menu"></i>
+              <span slot="title">角色列表</span>
+            </el-menu-item>
+            <el-menu-item index="2-2">
+              <i class="el-icon-menu"></i>
+              <span slot="title">权限列表</span>
+            </el-menu-item>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+      <el-main>Main</el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
 export default {
-
+  methods: {
+    logout() {
+      // 弹出确认框
+      this.$confirm('您确定要退出本系统吗？', '温馨提示', {
+        type: 'warning'
+      })
+        .then(() => {
+          // 清空token
+          localStorage.removeItem('token')
+          this.$router.push('/login')
+          this.$message.success('退出成功')
+        })
+        .catch(() => this.$message.error('取消退出'))
+    }
+  }
 }
 </script>
 
-<style>
-
+<style lang="less" scoped>
+.home {
+  height: 100%;
+  .el-header {
+    background: #b3c1cd;
+    display: flex;
+    .logo {
+      width: 180px;
+      background: url('../assets/logo.png') no-repeat center;
+      background-size: contain;
+    }
+    .title {
+      flex: 1;
+      h1 {
+        color: #fff;
+        font-size: 30px;
+        line-height: 60px;
+        text-align: center;
+      }
+    }
+    .logout {
+      width: 180px;
+      line-height: 60px;
+      font-weight: 700;
+      text-align: right;
+      a {
+        color: orange;
+      }
+    }
+  }
+  .el-aside {
+    background: #545c64;
+    .el-submenu {
+      width: 200px;
+    }
+  }
+}
 </style>
